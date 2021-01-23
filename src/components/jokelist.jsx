@@ -9,26 +9,33 @@ const API_URL = "https://icanhazdadjoke.com/"
 class JokeList extends React.Component{
     state = {
         numOfJokes: 10,
-        jokes: [],
-        isLoaded: false
+        jokes: JSON.parse(localStorage.getItem('Jokes')) || [],
+        isLoaded: true
     }
 
-    async componentDidMount(){
+    componentDidMount(){
+        if(this.state.jokes.length === 0){
+            this.getJokes()
+        }  
+    }
+
+    async getJokes(){
         let jokeList = [];
         while (jokeList.length < this.state.numOfJokes){
             let res = await axios.get(API_URL, {headers: {Accept: 'application/json'}})
-            console.log(res.data.joke)
             jokeList.push({id: uuid(), ajoke: res.data.joke, avote: 0})
         }
-        this.setState({jokes: jokeList, isLoaded:true});
+        this.setState({jokes: jokeList});
+        localStorage.setItem('Jokes', JSON.stringify(jokeList))
     }
 
     handleVote(id, delta){
         this.setState(st => ({
             jokes: st.jokes.map(j => j.id === id ? {...j, avote: j.avote + delta} : j)
-        }))
+        }),
+        () => localStorage.setItem('Jokes', JSON.stringify(this.state.jokes))
+        );
     }
-
 
     render(){
         if (this.state.isLoaded === true){
@@ -39,7 +46,7 @@ class JokeList extends React.Component{
                             <span>Dad</span> Jokes
                         </h1>
                         {/* <img src=''/> */}
-                        <button className='JokeList-getmore'>New Jokes</button>
+                        <button className='JokeList-getmore' >New Jokes</button>
                     </div>
                     
                     <div className='JokeList-jokes'>
