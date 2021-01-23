@@ -1,11 +1,14 @@
-import './App.css';
+import './css/App.css';
 import JokeList from './jokelist'
 
 function App() {
   return (
     <div className="App">
-      <div>This is Main Component</div>
-      <JokeList />
+      <h1>Dad Joke</h1>
+
+      <div className='Jokes'>
+        <JokeList />
+      </div>
     </div>
   );
 }
