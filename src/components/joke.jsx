@@ -1,4 +1,5 @@
 import React from 'react'
+import './css/joke.css'
 
 class Joke extends React.Component{
     render(){
@@ -6,7 +7,7 @@ class Joke extends React.Component{
             <div className='Joke'>
                 <div className='Joke-buttons'>
                     <i className="fas fa-arrow-up" onClick={this.props.upVote}/>
-                    <span>{this.props.vote}</span>
+                    <span className='Joke-votes'>{this.props.vote}</span>
                     <i className="fas fa-arrow-down" onClick={this.props.downVote}/>
                 </div>
                 <div className='Joke-text'>{this.props.text}</div>
