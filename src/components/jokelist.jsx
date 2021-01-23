@@ -25,8 +25,8 @@ class JokeList extends React.Component{
             let res = await axios.get(API_URL, {headers: {Accept: 'application/json'}})
             jokeList.push({id: uuid(), ajoke: res.data.joke, avote: 0})
         }
-        this.setState({jokes: jokeList});
-        localStorage.setItem('Jokes', JSON.stringify(jokeList))
+        this.setState({jokes: [...this.state.jokes, ...jokeList]});
+        localStorage.setItem('Jokes', JSON.stringify(this.state.jokes))
     }
 
     handleVote(id, delta){
@@ -35,6 +35,10 @@ class JokeList extends React.Component{
         }),
         () => localStorage.setItem('Jokes', JSON.stringify(this.state.jokes))
         );
+    }
+
+    handleClick(){
+        this.getJokes();
     }
 
     render(){
@@ -46,7 +50,7 @@ class JokeList extends React.Component{
                             <span>Dad</span> Jokes
                         </h1>
                         {/* <img src=''/> */}
-                        <button className='JokeList-getmore' >New Jokes</button>
+                        <button className='JokeList-getmore' onClick={this.handleClick.bind(this)}>New Jokes</button>
                     </div>
                     
                     <div className='JokeList-jokes'>
