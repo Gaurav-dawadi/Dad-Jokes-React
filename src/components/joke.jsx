@@ -11,6 +11,9 @@ class Joke extends React.Component{
                     <i className="fas fa-arrow-down" onClick={this.props.downVote}/>
                 </div>
                 <div className='Joke-text'>{this.props.text}</div>
+                <div className='Joke-smiley'>
+                    <i class="em em-face_with_rolling_eyes" aria-role="presentation" aria-label="FACE WITH ROLLING EYES"></i>
+                </div>
             </div>
         )
     }
